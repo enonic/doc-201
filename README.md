@@ -1,8 +1,11 @@
-# Introduction to Enonic
+# Enonic 201 ✌️
 
-An introductory guide to the Enonic universe.
+The second part of an introductory guide to the Enonic universe.
 
-These docs are written in asciidoc.
+These docs are written in asciidoc. The below content was copied
+directly from [the original introductory
+guide](https://github.com/enonic/doc-intro-to-enonic/), but should be
+applicable to this repository too.
 
 ## 🖊️ Working on the docs
 
