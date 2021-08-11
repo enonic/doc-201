@@ -1,0 +1,347 @@
+= {title-input-types}
+include::.variables.adoc[]
+:description: {description-input-types}
+
+The content types we've created previously in this guide have only used two basic input types: TextLine and TextArea. However, Content Studio has a lot more up its sleeve than that! Input types dictate what kind of data the user can or must add any piece of content. This {document} introduces more new types of inputs and explains how you can configure them to your liking.
+
+NOTE: If you're used to working with HTML, be aware that XP's `input` elements are _not_ the same as HTML `input` elements.
+
+NOTE: {see-prev-docs}
+
+== Configuration
+
+
+All input types share a number of options that affect how they act. These options are:
+
+`label` (required):: What the input should be labeled as in the content form.
+`occurrences` (optional):: Specifies the minimum and maximum instances of this field. Defaults to "one optional".
+`default` (optional):: Gives a default value to the input.
+`help-text` (optional):: Lets you specify a description of the input field to show to the user.
+`config` (optional):: Input type-specific configuration.
++
+The `config` element is for input-specific configuration. Because the input types are so different to each other, they all support different options. The `config` element allows us to use regex validation for TextLine inputs, configure formatting options for HtmlAreas, and to dictate what numeric values a Long or a Double input accepts.
+
+All of the shared configuration options (`label`, `occurrences`, etc.) are described in more detail in the https://developer.enonic.com/docs/xp/stable/cms/schemas#input_types[input types schema documentation]. Additionally, all input types and their respective `config` options are listed in the https://developer.enonic.com/docs/xp/stable/cms/input-types[the input types documentation].
+
+To show an example of the configuration options work, let's examine some TextLine inputs with different configurations.
+
+.TextLine inputs using all the shared configuration options
+[source,xml]
+----
+<input type="TextLine" name="textlineRequired">
+  <label>Required input with default</label> <--.-->
+  <help-text>This text should provide additional information to the user.</help-text> <--.-->
+  <occurrences minimum="1" maximum="1" /> <--.-->
+  <default>This is a required input with a default value.</default> <--.-->
+</input>
+
+<input type="TextLine" name="textlineOptional">
+  <label>Optional input</label>
+  <occurrences minimum="0" maximum="1" /> <--.-->
+</input>
+
+<input type="TextLine" name="textlineList">
+  <label>Input list</label>
+  <help-text>This input can have as many values as you want.</help-text>
+  <occurrences minimum="0" maximum="0" /> <--.-->
+</input>
+----
+
+<.> The label is shown above the input and provides context to the user.
+<.> The help-text can provide extra context and information to the user. It's hidden by default, but can be shown by activating the help text button.
+<.> This instance of the `occurrences` element specifies that this is a _required_ input. It must have _at least_ one and _at most_ one value.
+<.> The default value gets added to the input by default. The user can manually override this.
+<.> When you specify `minimum="0"` and `maximum="1"` on an `occurrences` element, that makes the input optional. This is the default.
+<.> When you set `maximum="0"` on an `occurrences` element, the user can add as many values as they want to.
+
+This set of inputs would be rendered as in the following picture. As specified in the above configuration, notice:
+
+- The required input field has a red asterisk to signify that it must be filled out.
+- The required input field already has a value provided via the `default` configuration option.
+- The help texts for the required input field and for the input list are both visible
+- The input list has controls to add more inputs and remove existing inputs
+
+
+.TextLine inputs showing common configuration options
+image::input-type-common-configuration.png["Three TextLine inputs showing all the common configuration options: labels, help text, default text, and occurrences.",{image-xl}]
+
+==== Occurrences
+
+The occurrences configuration option decides how XP treats the input value. Use occurrences to indicate whether an input is expected to be a list or a single element and whether the input is required or not. The occurrences element has two required attributes, `minimum` and `maximum`. Use these to control the number of instances the user can create.
+
+The `minimum` attribute specifies that the user must fill out _at least_ this many instances of the field. Usually it is set to `0` or `1`. A zero indicates that the field is optional and that the user does not need to fill it out. A one means the field is required.
+
+The `maximum` attribute tells XP how many instances the input field can have _at most_. `0` is a special value here, indicating that the user can have _as many as they want_ (in other words: there is no maximum).
+
+A couple of common configuration tricks:
+
+- If you don't add an `occurrences` element, XP uses the default, which is `minimum="0"`, `maximum="1"`, meaning that the input is optional.
+
+- To make the input required, set both `minimum` and `maximum` to `1`.
+
+- To create a list of inputs, set `maximum` to `0` (if there is no limit to how many items the user can add) or to the desired maximum.
+
+NOTE: If `maximum` is greater than `0`, make sure that `minimum` is less than or equal to `maximum`. Otherwise, the input will never be considered valid according to XP.
+
+== Common inputs
+
+Apart from the input types we've already gotten familiar with, XP also has input types created for other kinds of data. You can always find the full list over https://developer.enonic.com/docs/xp/stable/cms/input-types[at the input types reference docs], but some useful and common ones are:
+
+https://developer.enonic.com/docs/xp/stable/cms/input-types#combobox[ComboBox]:: A dropdown menu containing predefined options for the user to select from. Allows selection of one or more options.
++
+.The ComboBox input type
+image::input-type-combo-box.webp["A standard select list / dropdown list / combo box input type with a few visible dummy options.",{image-s}]
++
+https://developer.enonic.com/docs/xp/stable/cms/input-types#date[Date] and https://developer.enonic.com/docs/xp/stable/cms/input-types#datetime[DateTime]:: Provides an interactive date picker (with a time component in DateTime's case) to save date and times.
++
+.The DateTime input type
+image::input-type-date-time.webp["A calendar showing year and month with a time indicator to the side.",{image-s}]
++
+https://developer.enonic.com/docs/xp/stable/cms/input-types#geopoint[GeoPoint]:: Stores GPS coordinates.
++
+.The GeoPoint input type
+image::input-type-geo-point.webp["A text line input with coordinates.",{image-s}]
++
+https://developer.enonic.com/docs/xp/stable/cms/input-types#htmlarea[HtmlArea]:: Provides a rich text, multi-line input. We'll discuss this in detail in xref:rich-text#[the next {document}].
++
+.The HtmlArea input type
+image::input-type-html-area.png["A text area with a tools ribbon on the top. The ribbon provides rich text tools such as justification, macro insertion, text styles, etc.",{image-s}]
+
+Additionally, XP has more complex input types, which we'll look at next.
+
+== ImageSelector
+
+.The ImageSelector input type
+image::input-type-image-selector.png[ImageSelector: An interactive image selection tool., {image-xl}]
+
+Images are a key part of many web experiences: they add color, break up the content, and gives the reader something to rest their eyes on. XP's image selector allows you to select an image for a piece of content and also to upload new images.
+
+.An minimal ImageSelector configuration
+[source,xml]
+----
+<input name="myimage" type="ImageSelector">
+  <label>My Image</label>
+</input>
+----
+
+Read more about the https://developer.enonic.com/docs/xp/stable/cms/input-types#imageselector[configuration of image selectors] in the reference docs.
+
+After you've added an image (or several), you can highlight it and click the edit button. This will take you to the image editing form. This is the same form as we saw in xref:media-and-images#_editing_images[the previous {document}].
+
+.The image selector with uploaded and selected images
+image::input-type-image-selector-highlighted-image.png["The image selector input field with two images of lions -- one male, one female - - below. Under the images, there's a set of buttons saying 'edit' and 'remove'.", {image-xl}]
+
+== ContentSelector
+
+.The ContentSelector input type
+image::input-type-content-selector.png[ContentSelector: An interactive content selection tool., {image-xl}]
+
+The image selector we just saw is actually a specialized form of the more complex ContentSelector input type. The ContentSelector input type allows you to reference other content. Let's say you have two content types: one of type person and one of type food. If you want to be able to specify which dishes the person likes, you could use a content type to create a reference from the person to their favored dish.
+
+Because referencing other content types comes with a lot of variability, the ContentSelector type has configuration options to support this. You can choose to allow only certain content types or only content that's available at a certain path. You can also change whether the selector should show content in a tree-style hierarchy or as a flat list of content.
+
+https://developer.enonic.com/docs/xp/stable/cms/input-types#contentselector[The full list of ContentSelector configuration options] is available in the reference docs, including a number of examples to explain content inclusion and exclusion. However, a simple configuration could look like this:
+
+.A basic ContentSelector configuration that only allows one content type
+[source, xml]
+----
+<input name="mycontentselector" type="ContentSelector">
+  <label>My ContentSelector</label>
+  <config>
+    <allowContentType>citation</allowContentType>
+  </config>
+</input>
+----
+
+== Task: {content-type-1}s and {content-type-2}s
+
+Time for a little recap! We'll put together everything we've learned about content types and input types thus far to create a new data set. A solution is listed below, but try and see if you can solve it yourself first. If you're wondering how to achieve some of the goals, try consulting the documentation that's been linked to in this {document}.
+
+Your task is to create a new content type: `{content-type-2-capitalized}` and to update the `{content-type-1-capitalized}` content type with new constraints and fields. By the end of this {document}, you should have content types that look like this in Content Studio:
+
+.The target for this task: {content-type-2} and {content-type-1}
+image::{content-type-2}-and-{content-type-1}-target.png["An {content-type-2} content wizard next to an {content-type-1} wizard", {image-xl}]
+
+{content-type-2-capitalized} constraints:
+
+* Make the display name use "species" as its label. _Hint: check out https://developer.enonic.com/docs/xp/stable/cms/content-types#form_definition[the content type form definition] and look for something that allows you to do this._
+* An {content-type-2} can also have alternative names for its species (for instance, the reindeer is also known as _caribou_). Allow the user to add as many alternative names as they want.
+* An image selector that accepts between 0 and 3 images.
+* Help text where you think it would be helpful.
+
+When you've created the content type, create a new folder in Content Studio at next to the {content-type-1}s folder. Call it "{content-type-2}s".
+
+For the {content-type-1} content type, here's what's going to change:
+
+* Add a ContentSelector input that allows only content of the "{content-type-2-capitalized}" type and that must be nested under the site's "{content-type-2}s" folder. Call it `favorite{content-type-2-capitalized}`.
+
+To verify that everything works, create some animals, and try creating a content link between a {content-type-1} and an {content-type-2}.
+
+When you've got that, create a GraphQL query that'll fetch all {content-type-1}s and list what their favorite animals are, as well their animals' descriptions .
+
+=== Solution
+
+. Create the animal content type. In `src/main/resources/site/content-types/{content-type-2}/{content-type-2}.xml`, place the following content:
++
+.The {content-type-2} content type
+[source,xml,{subs}]
+----
+<content-type>
+  <display-name>{content-type-2-capitalized}</display-name>
+  <description>An {content-type-2} that lives on planet Earth</description>
+  <display-name-label>Species</display-name-label> <!--.-->
+  <super-type>base:structured</super-type>
+  <form>
+
+    <input type="TextLine" name="otherNames">
+      <label>Other names</label>
+      <help-text>Other names for this species.</help-text>
+      <occurrences minimum="0" maximum="0" />
+    </input>
+
+    <input name="images" type="ImageSelector">
+      <label>Images</label>
+      <help-text>Images of the animal</help-text>
+      <occurrences minimum="0" maximum="3" />
+    </input>
+
+  </form>
+</content-type>
+----
++
+<.> This field lets you customize what Content Studio calls the "display name" field and what it puts in the placeholder text.
++
+. Next, update the `{content-type-1-capitalized}` content type.
++
+.An updated {content-type-1}
+[source,xml,{subs}]
+----
+<content-type>
+  <display-name>{content-type-1-capitalized}</display-name>
+  <description>Information about an {content-type-1}</description>
+  <super-type>base:structured</super-type>
+  <form>
+
+    <input name="name" type="TextLine">
+      <label>Name</label>
+      <help-text>
+        The artist's name (if different from their professional moniker).
+      </help-text>
+    </input>
+
+    <input type="TextArea" name="about">
+      <label>About the {content-type-1}</label>
+    </input>
+
+    <input name="favoriteAnimal" type="ContentSelector"> <!--.-->
+      <label>Favorite animal</label>
+      <config>
+        <allowContentType>animal</allowContentType>
+        <allowPath>${site}/animals/</allowPath>
+      </config>
+    </input>
+
+  </form>
+</content-type>
+----
++
+<.> This ContentSelector uses the `config` section to narrow the possible types of content to only be `{content-type-2-capitalized}`
++
+. Create some {content-type-2}s. Either pick your favorites, or, if you're not feeling creative, add these (content from Wikipedia), :
++
+.Lion (https://en.wikipedia.org/wiki/Lion[Wiki article for lion])
+Name:: Lion
+Description:: The lion (Panthera leo) is a species in the family Felidae and a member of the genus Panthera. It has a muscular, deep-chested body, short, rounded head, round ears, and a hairy tuft at the end of its tail.
++
+.Reindeer (https://en.wikipedia.org/wiki/Reindeer[Wiki article for reindeer])
+Name:: Reindeer, Caribou
+Description:: The reindeer (Rangifer tarandus), also known as caribou in North America, is a species of deer with circumpolar distribution, native to Arctic, sub-Arctic, tundra, boreal, and mountainous regions of northern Europe, Siberia, and North America.
+
+. Create some links using ContentSelector from {content-type-1}s to {content-type-2}s to get familiar with linking content.
+
+== Headless: fetching linked content and images
+
+TIP: Remember: you'll find the playground at {p1-api-url}.
+
+The way to link to linked content in GraphQL is to add it as a field as part of the data. This query will fetch all {content-type-1}s and their linked {content-type-2}s:
+
+.Query to fetch {content-type-1}s with their associated favorite animals
+[source,GraphQL,{subs}]
+----
+{
+  guillotine {
+    getChildren(key: "${site}/{content-type-1}s/")
+    {
+      displayName
+      ... on {project-name-query}_{content-type-1-capitalized} {
+        data {
+          name
+          favoriteAnimal {
+            displayName
+            ... on {project-name-query}_{content-type-2-capitalized}{
+              data {
+                otherNames
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+----
+
+Depending on the links (and {content-type-2}s) you created, your result might look a little something like this:
+
+.The list of {content-type-1}s with their favorite animals
+[source,json]
+----
+{
+  "data": {
+    "guillotine": {
+      "getChildren": [
+        {
+          "displayName": "Cardi B",
+          "data": {
+            "name": "Belcalis Marlenis Almánzar",
+            "favoriteAnimal": {
+              "displayName": "Reindeer",
+              "data": {
+                "otherNames": [
+                  "Caribou"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "displayName": "Missy Elliott",
+          "data": {
+            "name": "Melissa Arnette Elliott",
+            "favoriteAnimal": {
+              "displayName": "Lion",
+              "data": {
+                "otherNames": []
+              }
+            }
+          }
+        },
+        {
+          "displayName": "P!nk",
+          "data": {
+            "name": "Alecia Beth Moore",
+            "favoriteAnimal": {
+              "displayName": "Reindeer",
+              "data": {
+                "otherNames": [
+                  "Caribou"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+----

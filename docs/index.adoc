@@ -1,0 +1,68 @@
+= Introduction to Enonic
+include::.variables.adoc[]
+:section-1: Installing tools and initial setup
+:section-2: Working with content
+:section-3: Advanced content modelling
+:section-4: Deployment, access control, and next steps
+
+
+Hi👋, and welcome to this in-depth guide to get familiar with Enonic. The guide is aimed at people new to Enonic, covering everything you need to know for a flying start 🦸‍♀️
+
+NOTE: *In a hurry?* If you just want to get up and running as fast as possible, check out the https://developer.enonic.com/start[quick start docs] instead 🚀
+
+This guide is currently under development and will be updated with new content from time to time. If you have any questions or find any errors (or have any other feedback), don't hesitate to  https://github.com/enonic/doc-getting-started/[create an issue over at GitHub] ☺️📣
+
+Good luck! 🙌
+
+== Overview
+
+Below is an overview of the various chapters in this guide.
+
+[sidebar]
+.{section-1}
+--
+
+<<setup#, {title-setup}>>::
+{description-setup}
+<<sandboxes#, {title-sandboxes}>>::
+{description-sandboxes}
+<<apps#, {title-apps}>>::
+{description-apps}
+--
+
+[sidebar]
+.{section-2}
+--
+
+<<content#, {title-content}>>::
+{description-content}
+<<headless-api#, {title-headless-api}>>::
+{description-headless-api}
+<<media-and-images#, {title-media-and-images}>>::
+{description-media-and-images}
+<<input-types#, {title-input-types}>>::
+{description-input-types}
+--
+
+[sidebar]
+.{section-3}
+--
+
+<<sets#, {title-sets}>>::
+{description-sets}
+<<rich-text#, {title-rich-text}>>::
+{description-rich-text}
+<<x-data#, {title-x-data}>>::
+{description-x-data}
+--
+
+[sidebar]
+.{section-4}
+--
+
+<<deployment#, {title-deployment}>>::
+{description-deployment}
+<<iam#, {title-iam}>>::
+{description-iam}
+
+--
