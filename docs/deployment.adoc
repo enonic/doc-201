@@ -34,7 +34,6 @@ To upload an app:
 +
 .Drag and drop applications to upload them
 image::deployment-app-upload.png["The application installation menu with a blue overlay. The overlay says 'drop files to upload'",{image-xl}]
-// TODO: add image here
 
 NOTE: Deployment can also be done directly from https://developer.enonic.com/docs/enonic-cli/master/xp#app[CLI], which is useful in a https://developer.enonic.com/guides/ci-cd-for-xp-apps[Continuous Integration] setup.
 
