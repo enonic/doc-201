@@ -1,0 +1,40 @@
+include::.variables.adoc[]
+
+= {title-components}
+This {document} ...
+
+== Introduction
+TODO
+
+
+== Task: restrict admin access
+
+TODO
+
+=== Step 1: Something
+
+=== Step 2: More
+
+Some stuff to do
+
+. A
+. B
++
+NOTE: A nogte
++
+. C
+. D
+
+[source,properties,{subs}]
+----
+mapping.admin.host = {host}
+mapping.admin.source = /
+mapping.admin.target = /admin
+mapping.admin.idProvider.my-provider = default
+----
+
+
+
+== Further reading
+
+Some more useful links...

@@ -1,14 +1,16 @@
-= Introduction to Enonic
+= Enonic 201 - IAM, MVC framework, pages and components
 include::.variables.adoc[]
 :section-1: Deployment and access control
 
-Hi👋, and welcome to this in-depth guide to get familiar with Enonic. The guide is aimed at people new to Enonic, covering everything you need to know for a flying start 🦸‍♀️
 
-NOTE: *In a hurry?* If you just want to get up and running as fast as possible, check out the https://developer.enonic.com/start[quick start docs] instead 🚀
+NOTE: It is expected that you have completed the https://developer.enonic.com/guides/introduction-to-enonic[Enonic 101 tutorial] before starting on this 🚀
 
-This guide is currently under development and will be updated with new content from time to time. If you have any questions or find any errors (or have any other feedback), don't hesitate to  https://github.com/enonic/doc-getting-started/[create an issue over at GitHub] ☺️📣
 
-Good luck! 🙌
+Hi again! In this tutorial we will dive deeper into the platform, explaining how identity and access management works, as well as doing some coding to get familiar with the platform's JavaScript MVC framework.
+
+If you find errors, or have suggestions related to this documentation, visit the github repo to create issues or pull requests (links at the bottom of the page).
+
+Happy hacking! 🙌
 
 == Overview
 

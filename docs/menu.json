@@ -1,12 +1,32 @@
 {
   "menuItems": [
     {
-      "title": "1 - Deployment",
-      "document": "deployment"
+      "title": "1 - IAM",
+      "document": "iam"
     },
     {
-      "title": "2 - IAM",
-      "document": "iam"
+      "title": "2 - Localisation",
+      "document": "localisation"
+    },
+    {
+      "title": "3 - Controllers",
+      "document": "controllers"
+    },
+    {
+      "title": "4 - Headless API",
+      "document": "headless"
+    },
+    {
+      "title": "5 - Preview",
+      "document": "preview"
+    },
+    {
+      "title": "6 - Pages and regions",
+      "document": "pages"
+    },
+    {
+      "title": "7 - Parts and layouts",
+      "document": "components"
     }
   ]
 }

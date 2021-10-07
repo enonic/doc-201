@@ -4,21 +4,12 @@
 :document: chapter
 :xp-url: http://localhost:8080
 :cs-url: {xp-url}/admin/tool/com.enonic.app.contentstudio/main
-:project-name-prefix: com.example.
-:project-name: myproject
-:project-name-full: {project-name-prefix}{project-name}
-:project-name-query: com_example_{project-name}
-:p1-site-name: My First Site
-:p1-site-slug: my-first-site
-:p1-api-path: /site/default/draft/{p1-site-slug}/api
-:p1-api-url: {xp-url}{p1-api-path}
 :subs: subs="attributes+"
 :title-deployment: Deployment
-:title-iam: IAM: identities and providers
+:title-iam: IAM: identity providers and access management
+:title-localisation: Localising content and user interface
 :image-xs: width=600
 :image-s: width=750
 :image-m: width=900
 :image-l: width=1050
 :image-xl: width=1200
-:description-deployment: How do you actually deploy Enonic XP and use it for more than local development? And where do you go from here to learn more?
-:description-iam: How do you restrict access to your sites? What kinds of access control exist for XP? This {document} explores users, roles, groups, and identity providers.
