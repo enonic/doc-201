@@ -4,9 +4,11 @@ include::.variables.adoc[]
 :host: xp-admin.com
 :provider: my provider
 
-When you deploy  your XP instance to anywhere outside of your own, local computer, you're most likely going to want to restrict access to parts of it. You very likely aren't going to want to leave your admin pages open to the public, and in many cases you're also going to want to create content that requires a user to log in before accessing it. To facilitate that, XP uses something called identity providers (_ID providers_ for short).
+When you deploy your content and apps to a server, you will need to restrict access to parts of it. For instance, your admin console must be protected, and in some cases you may create content that requires a user (or machine) to authenticate before accessing it. 
 
-This {document} covers the basics of _Identity and Access Management_ (IAM) in XP. It covers _users_, _groups_, and _roles_, _permissions_, and finally how to set up and configure ID providers in XP.
+To handle this, XP uses something called identity providers (_ID providers_ for short).
+
+This {document} gives you an introduction to the basics of _Identity and Access Management_ (IAM) in XP. Covering _users_, _groups_, _roles_, _permissions_, and finally how to set up and configure ID providers in XP.
 
 == Principals: Users, groups, and roles
 // This does not need to be a deep dive on these topics, but it should give the reader an overview of what these are and why they exist. Should also mention the granularity with which they can be applied.
@@ -16,23 +18,44 @@ https://en.wikipedia.org/wiki/Principal_(computer_security)[According to Wikiped
 [quote, Wikipedia: Principal (computer security)]
  [...] an entity that can be authenticated by a computer system or network. [...] Principals can be individual people, computers, services, computational entities such as processes and threads, or any group of such things.
 
-The XP IAM system has three principals: _users_, _groups_, and _roles_.
+The XP IAM system has three principal types: _users_, _groups_, and _roles_.
 
-A _user_ is the most basic kind of principal. As you might expect, they correspond to login credentials and are typically given out to each physical user. A user principal can be a member of any number of groups and be assigned any number of roles.
+Users:: A _user_ is the most basic kind of principal. As you might expect, they correspond to login credentials and are typically given out to each physical user (but can also be used to authenticate machines). A user principal can be a member of any number of groups and be assigned any number of roles.
 
-A _group_ is a collection of users. Each group can contain any number of users. Additionally, a group may be assigned any number of roles. Each member that is part of a group is then also assigned all the roles that a group has.
+Groups:: A _group_ is a collection of users. Each group can contain any number of users. Additionally, a group may be assigned any number of roles. Each member that is part of a group is then also assigned all the roles that a group has.
 
-A _role_ provides application-specific functionality. Each application can bundle a number of roles, each of which gives the assignee permission to perform certain actions related to the application. For instance: the _Administrator_ role comes bundled with XP. Any user with this role (either directly or transitively via their group) gets full access to all content and admin tools in XP.
+Roles:: A _role_ is similar to a group, but has fixed name, and typically provides application-specific functionality. An application can for instance ship with a number of roles, each of which gives the assignee permission to perform certain actions related to the application. 
+
+NOTE: A role cannot be assigned other roles. To simplify management where multiple roles are required, we recommend assigning multiple roles to a group, and then adding users to that group.
+
+=== Transitive memberships
+XP calcuates a users group and role memberships transitively. This basically means that if user A is member of Group B, and group B has the role C, and membership in group D. Then user A has both the role C, and membership in group B and D.
+
+== Standard roles and users
+XP ships with several standard users and roles. These are the essential to know about: 
+
+Administrator Role (system.admin):: Any user with this role gets full access to to the system, including ability to install apps, access content and manage users.
+
+Super User (system:su):: The `su` user is similar to the Root user in Linux, the user cannot be deleted, and since it has the `system.admin` role - it has full permissions.
+
+TIP: If you have problems logging in with your regular user, you may override the SU user's password via configuration. Enabling you to accessing the platform in case of an emergency.
+
+Everyone Role (system.everyone):: This role is different from all other roles since all users are automatically members of the role. This is useful when for instance you want to make content publically available.
+
+Anonymous User (system:anonymous):: XP always expects a user when performing actions. To handle situations when no users is logged, in the Anonymous user automatically steps in to fill the vacancy. The `Anonymous` user naturally also a member of the `Everyone` role.
+
+== Project roles
+
+TODO, are projects already described?
 
 == Permissions
 
-Permissions tell the system what actions a user, group, or role can perform. That is: permissions grant authorization to perform certain actions. Use them to give fine-grained access to items in the NoSQL storage, such as pieces of content in Content Studio or ..?
+Fine-grained permissions such as Read, Write, Delete and Publish may be applied directly to your content structure, down to a single item.
 
-.Questions
-- What items are in NoSQL storage? Should it be NoQL storage?
-- What sort of items have permissions and what sort of items do not?
+Permissions may be granted to any principal.
 
-For instance, if you wanted to assign let a group create users in an ID provider, you could grant the group permissions on the ID provider page, assuming you have the necessary permissions to do so.
+== Task: Limit access to...
+
 
 .ID provider permissions input element
 image::iam-assign-permissions.png["A permissions form element for an ID provider. There is a dropdown open for a custom group, which asks which permissions to grant. The options are 'read', 'create users' 'write users', 'id provider manager', and 'administrator'."]
