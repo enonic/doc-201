@@ -49,16 +49,16 @@ An example vhosts file that achieves the mapping mentioned could contain the fol
 
 [src,properties,{subs}]
 ----
-enabled = true <--.-->
+enabled = true // <1>
 
-mapping.example.host = {p1-site-slug}.com <--.-->
-mapping.example.source = / <--.-->
-mapping.example.target = /site/default/master/{p1-site-slug}/ <--.-->
+mapping.example.host = {p1-site-slug}.com // <2>
+mapping.example.source = / // <3>
+mapping.example.target = /site/default/master/{p1-site-slug}/ // <4>
 ----
-<.> Enable vhosts configuration
-<.> Intercept requests to `{p1-site-slug}.com`
-<.> Map any request that starts with this path ...
-<.> ... to this internal URL.
+<1> Enable vhosts configuration
+<2> Intercept requests to `{p1-site-slug}.com`
+<3> Map any request that starts with this path ...
+<4> ... to this internal URL.
 
 To read more about virtual hosts, head to the https://developer.enonic.com/docs/xp/stable/deployment/vhosts[_Vhosts_ section of the deployment documentation].
 
@@ -90,18 +90,18 @@ image::deployment-edit-permissions.png["The permissions dialog after the necessa
 ----
 enabled = true
 
-mapping.site.host = {vhost-host} <--.-->
+mapping.site.host = {vhost-host} // <1>
 mapping.site.source = /
 mapping.site.target = /site/default/draft/{p1-site-slug}/api
 
-mapping.localhost.host = localhost <--.-->
+mapping.localhost.host = localhost // <2>
 mapping.localhost.source = /
 mapping.localhost.target = /
 mapping.localhost.idProvider.system = default
 ----
 +
-<.> If requests go to `{vhost-host}`, send them to the target at `{p1-api-path}`. Note that this does not affect port mapping, so you'd still need to append the port (`:8080`) for your local setup.
-<.> This block allows the localhost mappings to keep working. Without this, `localhost:8080` wouldn't work anymore. We'll talk more about the ID provider line in the {next-chapter}.
+<1> If requests go to `{vhost-host}`, send them to the target at `{p1-api-path}`. Note that this does not affect port mapping, so you'd still need to append the port (`:8080`) for your local setup.
+<2> This block allows the localhost mappings to keep working. Without this, `localhost:8080` wouldn't work anymore. We'll talk more about the ID provider line in the {next-chapter}.
 +
 . If you're watching your XP process, you should see a message like this:
 
@@ -135,13 +135,13 @@ If the connection is successful, your output should look something like this:
 
 [{subs}]
 ----
-HTTP/1.1 200 OK <--.-->
+HTTP/1.1 200 OK // <1>
 Date: Wed, 04 Aug 2021 09:32:22 GMT
 Content-Type: text/html;charset=utf-8
 Content-Length: 1657
 ----
 
-<.> This indicates that the request was successful. This is the most important part. As long as it says `200 OK` you can ignore the rest of the message. You can https://en.wikipedia.org/wiki/List_of_HTTP_status_codes[read more about HTTP status codes on Wikipedia]
+<1> This indicates that the request was successful. This is the most important part. As long as it says `200 OK` you can ignore the rest of the message. You can https://en.wikipedia.org/wiki/List_of_HTTP_status_codes[read more about HTTP status codes on Wikipedia]
 
 You might not be able to do much with that output, but it means the mapping has worked successfully, which is the important part for this task.
 
